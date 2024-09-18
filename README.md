@@ -1,107 +1,62 @@
-<p>
-Note: Both username and email can be used as login ID.
-</p>
+> **Important:**  
+> Both username and email can be used as login ID. 
+> Password should be strong
 
-## User Registration
-<code>
+## API Endpoints
 
-
+### Registration
+```
 <?php
+$client = new Client();
+$headers = [
+  'Content-Type' => 'application/json',
+  'Cookie' => 'Cookie_1=value'
+];
+$body = '{
+  "first_name": "test",
+  "last_name": "Doe",
+  "dob": "1990-01-01",
+  "gender": "male",
+  "username": "test",
+  "email": "test@example.com",
+  "password": "Passw@rd123",
+  "password_confirmation": "Passw@rd123",
+  "privacy_policy_agreement": true
+}';
+$request = new Request('POST', 'http://127.0.0.1:8000/api/v1/register', $headers, $body);
+$res = $client->sendAsync($request)->wait();
+echo $res->getBody();
+```
 
-$curl = curl_init();
 
-curl_setopt_array($curl, array(
-  CURLOPT_URL => 'http://127.0.0.1:8000/api/v1/register',
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_ENCODING => '',
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 0,
-  CURLOPT_FOLLOWLOCATION => true,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS =>'{
-    "first_name": "test",
-    "last_name": "test",
-    "dob": "1990-01-01",
-    "gender": "male",
-    "username": "testuser",
-    "email": "testuser@example.com",
-    "password": "Passw@rd123",
-    "password_confirmation": "Passw@rd123",
-    "privacy_policy_agreement": true
-}
-',
-  CURLOPT_HTTPHEADER => array(
-    'Content-Type: application/json'
-  ),
-));
-
-$response = curl_exec($curl);
-
-curl_close($curl);
-echo $response;
-
-</code>
-
-## User Login
-
-<code>
+### Login
+```
 <?php
+$client = new Client();
+$headers = [
+  'Authorization' => 'Bearer {token}',
+  'Cookie' => 'Cookie_1=value'
+];
+$request = new Request('GET', 'http://127.0.0.1:8000/api/v1/me', $headers);
+$res = $client->sendAsync($request)->wait();
+echo $res->getBody();
+```
 
-$curl = curl_init();
 
-curl_setopt_array($curl, array(
-  CURLOPT_URL => 'http://127.0.0.1:8000/api/v1/login',
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_ENCODING => '',
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 0,
-  CURLOPT_FOLLOWLOCATION => true,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS =>'{
-    "login":"testuser",
-    "password":"Passw@rd123"
-}',
-  CURLOPT_HTTPHEADER => array(
-    'Content-Type: application/json'
-  ),
-));
-
-$response = curl_exec($curl);
-
-curl_close($curl);
-echo $response;
-
-</code>
-
-## me
-<code>
+### Me
+```
 <?php
+$client = new Client();
+$headers = [
+  'Authorization' => 'Bearer {token}',
+  'Cookie' => 'Cookie_1=value'
+];
+$request = new Request('GET', 'http://127.0.0.1:8000/api/v1/me', $headers);
+$res = $client->sendAsync($request)->wait();
+echo $res->getBody();
+```
 
-$curl = curl_init();
 
-curl_setopt_array($curl, array(
-  CURLOPT_URL => 'http://127.0.0.1:8000/api/v1/me',
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_ENCODING => '',
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 0,
-  CURLOPT_FOLLOWLOCATION => true,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => 'GET',
-  CURLOPT_HTTPHEADER => array(
-    'Authorization: Bearer <add generated token here>',
-    'Cookie: Cookie_1=value'
-  ),
-));
-
-$response = curl_exec($curl);
-
-curl_close($curl);
-echo $response;
-
-</code>
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
